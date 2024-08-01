@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  // gera um valor aleatório e único para cada ID
+  id String @id @default(uuid())
+
+  // título do evento
+  title String
+
+  // descrição do evento
+  // ? indica que o campo é opcional
+  details String?
+
+  // slug é um identificador único para o evento
+  slug String @unique
+
+  // máximo de participantes
+  // um @map é usado para mapear o nome do campo no banco de dados
+  maximumAttendees Int? @map("maximum_attendees")
+
+  // dois @@ significa alterações na tabela inteira
+  @@map("events")
+}
